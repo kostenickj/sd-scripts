@@ -1584,8 +1584,10 @@ class BaseDataset(torch.utils.data.Dataset):
                         alpha_mask = img[:, :, 3]  # [H,W]
                         alpha_mask = alpha_mask.astype(np.float32) / 255.0  # 0.0~1.0
                         alpha_mask = torch.FloatTensor(alpha_mask)
+                        logger.debug(f"Included alpha mask for image: {image_info.absolute_path}")
                     else:
                         alpha_mask = torch.ones((img.shape[0], img.shape[1]), dtype=torch.float32)
+                        logger.debug(f"Included alpha mask for image: {image_info.absolute_path}")
                 else:
                     alpha_mask = None
 
@@ -2893,8 +2895,10 @@ def load_images_and_masks_for_caching(
                 alpha_mask = image[:, :, 3]  # [H,W]
                 alpha_mask = alpha_mask.astype(np.float32) / 255.0
                 alpha_mask = torch.FloatTensor(alpha_mask)  # [H,W]
+                logger.debug(f"Load images and masks : Included alpha mask for image: {info.absolute_path}")
             else:
                 alpha_mask = torch.ones_like(image[:, :, 0], dtype=torch.float32)  # [H,W]
+                logger.debug(f"Load images and masks : Included alpha mask for image: {info.absolute_path}")
         else:
             alpha_mask = None
         alpha_masks.append(alpha_mask)
@@ -2934,8 +2938,10 @@ def cache_batch_latents(
                 alpha_mask = image[:, :, 3]  # [H,W]
                 alpha_mask = alpha_mask.astype(np.float32) / 255.0
                 alpha_mask = torch.FloatTensor(alpha_mask)  # [H,W]
+                logger.debug(f"Cache batch latents : Included alpha mask for image: {info.absolute_path}")
             else:
                 alpha_mask = torch.ones_like(image[:, :, 0], dtype=torch.float32)  # [H,W]
+                logger.debug(f"Cache batch latents : Included alpha mask for image: {info.absolute_path}")
         else:
             alpha_mask = None
         alpha_masks.append(alpha_mask)
